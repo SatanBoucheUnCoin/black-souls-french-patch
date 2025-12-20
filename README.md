@@ -8,9 +8,9 @@ Traduction française non-officielle pour **BLACK SOULS** (RPG Maker VX Ace).
    - **Steam (Linux)** : `~/.local/share/Steam/steamapps/common/BLACK SOULS/`
    - **Steam (Windows)** : `C:\Program Files (x86)\Steam\steamapps\common\BLACK SOULS\`
 
-2. Copiez le dossier `Data/` de ce patch dans le dossier du jeu.
-   - Si un dossier `Data/` existe déjà, fusionnez les fichiers (écrasez les existants).
-   - Sinon, copiez simplement le dossier `Data/` tel quel.
+2. Exécutez le script d'installation :
+   - **Windows** : Double-cliquez sur `install.bat`
+   - **Linux** : Exécutez `./install.sh` dans un terminal
 
 3. Lancez le jeu !
 
