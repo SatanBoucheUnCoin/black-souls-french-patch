@@ -1,6 +1,6 @@
 #!/bin/bash
 # Script d'installation du patch français BLACK SOULS
-# Crée les copies des fichiers audio avec les noms traduits
+# Copie les fichiers traduits et crée les fichiers audio avec les noms français
 
 set -u  # Erreur si variable non définie
 
@@ -8,10 +8,10 @@ set -u  # Erreur si variable non définie
 SUCCESS=0
 ERRORS=0
 GAME_DIR=""
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Chemins possibles du jeu (Linux)
 POSSIBLE_PATHS=(
-    "."  # Dossier courant
     "$HOME/.steam/steam/steamapps/common/BLACK SOULS"
     "$HOME/.local/share/Steam/steamapps/common/BLACK SOULS"
     "$HOME/.steam/debian-installation/steamapps/common/BLACK SOULS"
@@ -82,7 +82,38 @@ if [ $# -ge 1 ]; then
 fi
 
 echo "Dossier du jeu trouvé: $GAME_DIR"
+
+# === ÉTAPE 1: Copier les fichiers Data traduits ===
+echo ""
+echo "Installation des fichiers de traduction..."
+
+if [ -d "$SCRIPT_DIR/Data" ]; then
+    # Créer le dossier Data s'il n'existe pas
+    mkdir -p "$GAME_DIR/Data"
+
+    # Copier tous les fichiers .rvdata2
+    DATA_COUNT=0
+    for file in "$SCRIPT_DIR/Data/"*.rvdata2; do
+        if [ -f "$file" ]; then
+            cp "$file" "$GAME_DIR/Data/" && DATA_COUNT=$((DATA_COUNT + 1))
+        fi
+    done
+    echo "  $DATA_COUNT fichiers de données copiés"
+else
+    echo "ATTENTION: Dossier Data/ non trouvé dans le patch"
+    echo "           Seuls les fichiers audio seront installés"
+fi
+
+# Désactiver l'archive pour forcer le chargement depuis Data/
+if [ -f "$GAME_DIR/Game.rgss3a" ]; then
+    mv "$GAME_DIR/Game.rgss3a" "$GAME_DIR/Game.rgss3a.disabled"
+    echo "  Archive Game.rgss3a désactivée"
+fi
+
 cd "$GAME_DIR" || exit 2
+
+# === ÉTAPE 2: Créer les fichiers audio avec noms français ===
+echo ""
 
 # Vérifier que les sous-dossiers Audio existent
 if [ ! -d "Audio/BGS" ]; then
@@ -107,8 +138,6 @@ if [ ! -w "Audio/SE" ]; then
     echo "        Essayez d'exécuter ce script en tant qu'administrateur"
     exit 3
 fi
-
-echo "Création des fichiers audio traduits..."
 
 # BGS (Background Sounds)
 cd Audio/BGS || exit 2

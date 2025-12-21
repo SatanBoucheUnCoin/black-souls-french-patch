@@ -3,11 +3,12 @@ chcp 65001 >nul
 setlocal enabledelayedexpansion
 
 REM Script d'installation du patch français BLACK SOULS
-REM Crée les copies des fichiers audio avec les noms traduits
+REM Copie les fichiers traduits et crée les fichiers audio avec les noms français
 
 set SUCCESS=0
 set ERRORS=0
 set GAME_DIR=
+set SCRIPT_DIR=%~dp0
 
 echo Installation du patch francais BLACK SOULS...
 echo.
@@ -83,7 +84,33 @@ exit /b 1
 
 :found
 echo Dossier du jeu trouve: !GAME_DIR!
+
+REM === ETAPE 1: Copier les fichiers Data traduits ===
+echo.
+echo Installation des fichiers de traduction...
+
+if exist "!SCRIPT_DIR!Data\" (
+    if not exist "!GAME_DIR!\Data\" mkdir "!GAME_DIR!\Data"
+    set DATA_COUNT=0
+    for %%f in ("!SCRIPT_DIR!Data\*.rvdata2") do (
+        copy "%%f" "!GAME_DIR!\Data\" >nul 2>&1 && set /a DATA_COUNT+=1
+    )
+    echo   !DATA_COUNT! fichiers de donnees copies
+) else (
+    echo ATTENTION: Dossier Data\ non trouve dans le patch
+    echo            Seuls les fichiers audio seront installes
+)
+
+REM Desactiver l'archive pour forcer le chargement depuis Data
+if exist "!GAME_DIR!\Game.rgss3a" (
+    ren "!GAME_DIR!\Game.rgss3a" "Game.rgss3a.disabled"
+    echo   Archive Game.rgss3a desactivee
+)
+
 cd /d "!GAME_DIR!"
+
+REM === ETAPE 2: Creer les fichiers audio avec noms francais ===
+
 
 REM Vérifier que les sous-dossiers Audio existent
 if not exist "Audio\BGS" (
@@ -117,7 +144,6 @@ if errorlevel 1 (
 )
 del "Audio\SE\_test_write.tmp" 2>nul
 
-echo Creation des fichiers audio traduits...
 
 REM BGS (Background Sounds)
 cd Audio\BGS
