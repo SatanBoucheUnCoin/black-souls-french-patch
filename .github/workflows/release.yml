@@ -1,0 +1,45 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Create ZIP archive
+        run: |
+          zip -r "BlackSouls-FrenchPatch-${{ steps.version.outputs.VERSION }}.zip" \
+            Data/ \
+            Audio/ \
+            install.bat \
+            install.sh \
+            README.md \
+            LICENSE \
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Black Souls - Patch Français ${{ steps.version.outputs.VERSION }}"
+          body: |
+            ## Installation
+
+            1. Téléchargez le fichier .zip ci-dessous
+            2. Extrayez-le dans votre dossier de jeu BLACK SOULS
+            3. Exécutez `install.bat` (Windows) ou `./install.sh` (Linux)
+            4. Lancez le jeu !
+
+            Consultez le README pour plus de détails.
+          files: BlackSouls-FrenchPatch-${{ steps.version.outputs.VERSION }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
