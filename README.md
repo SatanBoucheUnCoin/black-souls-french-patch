@@ -33,7 +33,8 @@ Traduction française non-officielle pour **BLACK SOULS** (RPG Maker VX Ace).
 2. Renommez `Game.rgss3a` en `Game.rgss3a.disabled`
 3. Copiez le contenu du dossier `Data/` du patch dans le dossier `Data/` du jeu
 4. Copiez le contenu du dossier `Audio/` du patch dans le dossier `Audio/` du jeu
-5. Lancez le jeu
+5. Copiez `steam_api.dll` du patch à la racine du jeu (à côté de `Game.exe`)
+6. Lancez le jeu
 
 ### Désinstallation
 
@@ -60,6 +61,19 @@ Exemple pour un scaling 2x sans filtre :
 ```
 LD_PRELOAD="" gamescope -w 640 -h 480 -W 1280 -H 960 -F pixel -r 60 -- %command%
 ```
+
+---
+
+## Problèmes connus
+
+### Erreur `steam_achievement line 82` (Steam Deck / Proton)
+
+Cette erreur se produit si `steam_api.dll` est manquant. Le script d'installation copie automatiquement ce fichier.
+
+Si l'erreur persiste après installation :
+1. Vérifiez que `steam_api.dll` est présent à la racine du jeu
+2. Si le fichier est absent, copiez-le manuellement depuis le patch
+3. En dernier recours : dans Steam, faites *Propriétés → Fichiers installés → Vérifier l'intégrité*
 
 ---
 

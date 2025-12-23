@@ -63,6 +63,12 @@ if exist "!GAME_DIR!\Game.rgss3a" (
     echo   Archive Game.rgss3a desactivee
 )
 
+REM Copier steam_api.dll (necessaire pour certaines configurations)
+if exist "!SCRIPT_DIR!steam_api.dll" (
+    copy "!SCRIPT_DIR!steam_api.dll" "!GAME_DIR!\" >nul 2>&1
+    echo   steam_api.dll copie
+)
+
 cd /d "!GAME_DIR!"
 
 REM === ETAPE 2: Audio ===

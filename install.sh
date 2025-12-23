@@ -88,6 +88,11 @@ fi
 # Désactiver l'archive
 [[ -f "$GAME_DIR/Game.rgss3a" ]] && mv "$GAME_DIR/Game.rgss3a" "$GAME_DIR/Game.rgss3a.disabled" && echo "  Archive désactivée"
 
+# Copier steam_api.dll (nécessaire pour Steam Deck/Proton)
+if [[ -f "$SCRIPT_DIR/steam_api.dll" ]]; then
+    cp "$SCRIPT_DIR/steam_api.dll" "$GAME_DIR/" && echo "  steam_api.dll copié"
+fi
+
 # === ÉTAPE 2: Audio ===
 #    ╔═══════════════════════════════════════════════════════════╗
 #    ║  Qu'est-ce que tu cherches exactement ?                   ║

@@ -27,6 +27,7 @@ jobs:
             Audio/ \
             install.bat \
             install.sh \
+            steam_api.dll \
             README.md \
             LICENSE \
 
