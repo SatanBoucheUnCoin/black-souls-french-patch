@@ -1,0 +1,27 @@
+# Build outputs
+dist/
+Game.rgss3a
+build/linux/Game.rgss3a
+
+# Legacy test folder
+test/
+translations_final.json
+post-steam
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.log
+
+# Game files (not part of patch)
+steam_api.dll

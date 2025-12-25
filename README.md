@@ -4,44 +4,52 @@ Traduction française non-officielle pour **BLACK SOULS** (RPG Maker VX Ace).
 
 | Info | Détails |
 |------|---------|
-|  **Version** | Uncensored (18+) |
-|  **État** | ~75% traduit |
-|  **Prérequis** | Aucun (inclut les corrections du patch anglais) |
+| **Version** | Uncensored (18+) |
+| **État** | ~75% traduit |
+| **Prérequis** | Aucun (inclut les corrections du patch anglais) |
 
 ---
 
 ## Installation
 
-> 💡 **Conseil** : Lancez le jeu une fois avant d'installer le patch pour que tous les fichiers soient créés.
+### Windows
 
-### Méthode automatique (recommandée)
+1. Téléchargez `BlackSouls_PatchFR_vX.X.X.exe` depuis les [Releases](../../releases)
+2. Lancez l'installateur
+3. Le jeu sera détecté automatiquement (Steam)
+4. Suivez les instructions
 
-1. Téléchargez et extrayez le patch
-2. Exécutez le script d'installation :
-   - **Windows** : Double-cliquez sur `install.bat`
-   - **Linux** : Exécutez `./install.sh` dans un terminal
-3. Lancez le jeu
+> L'installateur crée automatiquement une sauvegarde du fichier original.
 
-### Méthode manuelle
+### Linux / Steam Deck
+
+1. Téléchargez `install.sh` et `Game.rgss3a` depuis les [Releases](../../releases)
+2. Placez les deux fichiers dans le même dossier
+3. Exécutez :
+   ```bash
+   chmod +x install.sh
+   ./install.sh
+   ```
+
+Le script détecte automatiquement Steam (natif et Flatpak) et propose une interface graphique si disponible (Zenity/KDialog).
+
+### Installation manuelle
 
 1. Localisez votre dossier d'installation de BLACK SOULS :
    - **Steam (Linux)** : `~/.local/share/Steam/steamapps/common/BLACK SOULS/`
    - **Steam (Windows)** : `C:\Program Files (x86)\Steam\steamapps\common\BLACK SOULS\`
 
-   > 💡 *Clic droit sur le jeu dans Steam → Propriétés → Fichiers installés → Parcourir*
+   > *Clic droit sur le jeu dans Steam → Propriétés → Fichiers installés → Parcourir*
 
-2. Renommez `Game.rgss3a` en `Game.rgss3a.disabled`
-3. Copiez le contenu du dossier `Data/` du patch dans le dossier `Data/` du jeu
-4. Copiez le contenu du dossier `Audio/` du patch dans le dossier `Audio/` du jeu
-5. Copiez `steam_api.dll` du patch à la racine du jeu (à côté de `Game.exe`)
-6. Lancez le jeu
+2. Renommez l'original `Game.rgss3a` en `Game.rgss3a.backup`
+3. Copiez le nouveau `Game.rgss3a` du patch dans le dossier
+4. Lancez le jeu
 
 ### Désinstallation
 
-1. Supprimez le dossier `Data/` du jeu
-2. Renommez `Game.rgss3a.disabled` en `Game.rgss3a`
+Dans Steam : *Propriétés → Fichiers installés → Vérifier l'intégrité des fichiers*
 
-Le jeu utilisera automatiquement les fichiers originaux contenus dans l'archive.
+Cela restaurera le `Game.rgss3a` original.
 
 ---
 
@@ -49,9 +57,7 @@ Le jeu utilisera automatiquement les fichiers originaux contenus dans l'archive.
 
 ### Le jeu ne charge pas la traduction
 
-Vérifiez que :
-- Le dossier `Data/` est bien placé à la racine du jeu (à côté de `Game.exe`)
-- Les fichiers `.rvdata2` sont directement dans `Data/`, et non dans un sous-dossier
+Vérifiez que `Game.rgss3a` du patch a bien remplacé celui du jeu.
 
 ### Mode fenêtré avec mise à l'échelle (Linux)
 
@@ -61,19 +67,6 @@ Exemple pour un scaling 2x sans filtre :
 ```
 LD_PRELOAD="" gamescope -w 640 -h 480 -W 1280 -H 960 -F pixel -r 60 -- %command%
 ```
-
----
-
-## Problèmes connus
-
-### Erreur `steam_achievement line 82` (Steam Deck / Proton)
-
-Cette erreur se produit si `steam_api.dll` est manquant. Le script d'installation copie automatiquement ce fichier.
-
-Si l'erreur persiste après installation :
-1. Vérifiez que `steam_api.dll` est présent à la racine du jeu
-2. Si le fichier est absent, copiez-le manuellement depuis le patch
-3. En dernier recours : dans Steam, faites *Propriétés → Fichiers installés → Vérifier l'intégrité*
 
 ---
 
@@ -106,5 +99,5 @@ N'hésitez pas à ouvrir une *issue* ou une *pull request* pour signaler un prob
 Ce patch appartient à **PierrePaolo** et **Satan_Bouche_Un_Coin**.
 Il est **destiné au public**, librement distribuable, et **ne doit en aucun cas être vendu**.
 
-> ⚠️ Ce patch est une traduction **non-officielle** créée par des fans.
+> Ce patch est une traduction **non-officielle** créée par des fans.
 > Le jeu original et l'ensemble de ses contenus appartiennent à leurs créateurs respectifs.
