@@ -43,7 +43,7 @@ Le script détecte automatiquement Steam (natif et Flatpak) et propose une inter
    > *Clic droit sur le jeu dans Steam → Propriétés → Fichiers installés → Parcourir*
 
 3. Renommez l'original `Game.rgss3a` en `Game.rgss3a.backup`
-4. Extrayez le contenu du ZIP dans le dossier du jeu
+4. Extrayez le contenu du ZIP dans le dossier du jeu (Surtout le dossier Audio/)
 5. Lancez le jeu
 
 ### Désinstallation

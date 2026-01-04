@@ -124,8 +124,8 @@ jobs:
           # Linux - créer un ZIP avec tout dedans
           mkdir -p linux-package
           mv artifacts/game-rgss3a/Game.rgss3a linux-package/
-          mv artifacts/linux-installer/build/linux/install.sh linux-package/
-          mv artifacts/linux-installer/build/linux/Audio linux-package/
+          mv artifacts/linux-installer/install.sh linux-package/
+          mv artifacts/linux-installer/Audio linux-package/
           chmod +x linux-package/install.sh
 
           cd linux-package
