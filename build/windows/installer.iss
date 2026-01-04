@@ -45,6 +45,19 @@ english.FinishedLabel=The French patch has been successfully installed.%n%nYou c
 
 [Files]
 Source: "..\..\Game.rgss3a"; DestDir: "{app}"; Flags: ignoreversion
+; Fichiers audio traduits (BGS)
+Source: "..\..\Audio\BGS\Feu.ogg"; DestDir: "{app}\Audio\BGS"; Flags: ignoreversion
+Source: "..\..\Audio\BGS\Vent.ogg"; DestDir: "{app}\Audio\BGS"; Flags: ignoreversion
+Source: "..\..\Audio\BGS\Ténèbres.ogg"; DestDir: "{app}\Audio\BGS"; Flags: ignoreversion
+; Fichiers audio traduits (SE)
+Source: "..\..\Audio\SE\Feu*.ogg"; DestDir: "{app}\Audio\SE"; Flags: ignoreversion
+Source: "..\..\Audio\SE\Vent*.ogg"; DestDir: "{app}\Audio\SE"; Flags: ignoreversion
+Source: "..\..\Audio\SE\Eau*.ogg"; DestDir: "{app}\Audio\SE"; Flags: ignoreversion
+Source: "..\..\Audio\SE\Glace*.ogg"; DestDir: "{app}\Audio\SE"; Flags: ignoreversion
+Source: "..\..\Audio\SE\Tonnerre*.ogg"; DestDir: "{app}\Audio\SE"; Flags: ignoreversion
+Source: "..\..\Audio\SE\Soin*.ogg"; DestDir: "{app}\Audio\SE"; Flags: ignoreversion
+Source: "..\..\Audio\SE\Attaque*.ogg"; DestDir: "{app}\Audio\SE"; Flags: ignoreversion
+Source: "..\..\Audio\SE\Ténèbres*.ogg"; DestDir: "{app}\Audio\SE"; Flags: ignoreversion
 
 [Code]
 var
@@ -458,6 +471,7 @@ begin
             'Actions:' + NewLine +
             Space + '1. Sauvegarde de Game.rgss3a original' + NewLine +
             Space + '   -> Game.rgss3a.disabled' + NewLine +
-            Space + '2. Installation du patch francais' + NewLine + NewLine +
+            Space + '2. Installation du patch francais' + NewLine +
+            Space + '3. Copie des fichiers audio traduits' + NewLine + NewLine +
             'Pour desinstaller: verifiez l''integrite des fichiers dans Steam';
 end;

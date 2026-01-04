@@ -51,6 +51,13 @@ jobs:
           cp Game.rgss3a build/linux/
           chmod +x build/linux/install.sh
 
+          # Copier les fichiers audio traduits pour Linux
+          mkdir -p build/linux/Audio/BGS build/linux/Audio/SE
+          cp Audio/BGS/Feu.ogg Audio/BGS/Vent.ogg Audio/BGS/Ténèbres.ogg build/linux/Audio/BGS/
+          cp Audio/SE/Feu*.ogg Audio/SE/Vent*.ogg Audio/SE/Eau*.ogg build/linux/Audio/SE/
+          cp Audio/SE/Glace*.ogg Audio/SE/Tonnerre*.ogg Audio/SE/Soin*.ogg build/linux/Audio/SE/
+          cp Audio/SE/Attaque*.ogg Audio/SE/Ténèbres*.ogg build/linux/Audio/SE/
+
       - name: Upload Game.rgss3a
         uses: actions/upload-artifact@v4
         with:
@@ -61,7 +68,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: linux-installer
-          path: build/linux/install.sh
+          path: |
+            build/linux/install.sh
+            build/linux/Audio/
 
   build-windows:
     runs-on: windows-latest
@@ -108,10 +117,29 @@ jobs:
       - name: Prepare release files
         run: |
           ls -laR artifacts/
-          mv artifacts/game-rgss3a/Game.rgss3a .
-          mv artifacts/linux-installer/install.sh .
+
+          # Windows
           mv artifacts/windows-installer/*.exe .
-          chmod +x install.sh
+
+          # Linux - créer un ZIP avec tout dedans
+          mkdir -p linux-package
+          mv artifacts/game-rgss3a/Game.rgss3a linux-package/
+          mv artifacts/linux-installer/build/linux/install.sh linux-package/
+          mv artifacts/linux-installer/build/linux/Audio linux-package/
+          chmod +x linux-package/install.sh
+
+          cd linux-package
+          zip -r ../BlackSouls_PatchFR_v${{ needs.build-assets.outputs.version }}_Linux.zip .
+          cd ..
+
+          # ZIP Manuel (sans install.sh)
+          mkdir -p manual-package
+          cp linux-package/Game.rgss3a manual-package/
+          cp -r linux-package/Audio manual-package/
+          cd manual-package
+          zip -r ../BlackSouls_PatchFR_v${{ needs.build-assets.outputs.version }}_Manual.zip .
+          cd ..
+
           ls -lh
 
       - name: Create Release
@@ -129,21 +157,22 @@ jobs:
             3. Le jeu sera détecté automatiquement
 
             **Linux / Steam Deck :**
-            1. Téléchargez `install.sh` et `Game.rgss3a` dans le même dossier
-            2. Lancez : `chmod +x install.sh && ./install.sh`
+            1. Téléchargez `BlackSouls_PatchFR_v${{ needs.build-assets.outputs.version }}_Linux.zip`
+            2. Extrayez le ZIP
+            3. Lancez : `chmod +x install.sh && ./install.sh`
 
             ### Installation manuelle
 
-            1. Téléchargez `Game.rgss3a`
+            1. Téléchargez `BlackSouls_PatchFR_v${{ needs.build-assets.outputs.version }}_Manual.zip`
             2. Allez dans le dossier du jeu (`steamapps/common/BLACK SOULS/`)
             3. Renommez l'ancien `Game.rgss3a` en `Game.rgss3a.backup`
-            4. Copiez le nouveau `Game.rgss3a`
+            4. Extrayez le contenu du ZIP dans le dossier du jeu
 
             ---
             Consultez le [README](https://github.com/${{ github.repository }}) pour plus de détails.
           files: |
             *.exe
-            install.sh
-            Game.rgss3a
+            *_Linux.zip
+            *_Manual.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

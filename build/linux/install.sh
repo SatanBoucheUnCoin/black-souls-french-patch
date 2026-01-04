@@ -320,11 +320,20 @@ do_install() {
     log_info "Copie du patch français..."
     if cp "$patch_file" "$original"; then
         log_success "Patch installé avec succès!"
-        return 0
     else
         show_error "Erreur" "Impossible de copier le patch"
         return 1
     fi
+
+    # Copier les fichiers Audio traduits
+    local audio_dir="$SCRIPT_DIR/Audio"
+    if [[ -d "$audio_dir" ]]; then
+        log_info "Copie des fichiers audio traduits..."
+        cp -r "$audio_dir"/* "$game_path/Audio/" 2>/dev/null || true
+        log_success "Fichiers audio copiés!"
+    fi
+
+    return 0
 }
 
 run_installation_gui() {
@@ -354,9 +363,15 @@ run_installation_gui() {
                     rm -f "$original"
                 fi
 
-                echo "60"
+                echo "50"
                 echo "# Installation du patch français..."
                 cp "$patch_file" "$original"
+
+                echo "75"
+                echo "# Copie des fichiers audio..."
+                if [[ -d "$SCRIPT_DIR/Audio" ]]; then
+                    cp -r "$SCRIPT_DIR/Audio"/* "$game_path/Audio/" 2>/dev/null || true
+                fi
 
                 echo "100"
                 echo "# Installation terminée!"
@@ -392,10 +407,17 @@ run_installation_gui() {
                 rm -f "$original"
             fi
 
-            qdbus $dbus_ref Set "" value 60 2>/dev/null || true
+            qdbus $dbus_ref Set "" value 50 2>/dev/null || true
             qdbus $dbus_ref setLabelText "Installation du patch..." 2>/dev/null || true
 
             cp "$patch_file" "$original"
+
+            qdbus $dbus_ref Set "" value 75 2>/dev/null || true
+            qdbus $dbus_ref setLabelText "Copie des fichiers audio..." 2>/dev/null || true
+
+            if [[ -d "$SCRIPT_DIR/Audio" ]]; then
+                cp -r "$SCRIPT_DIR/Audio"/* "$game_path/Audio/" 2>/dev/null || true
+            fi
 
             qdbus $dbus_ref Set "" value 100 2>/dev/null || true
             sleep 0.5

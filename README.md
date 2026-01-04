@@ -23,8 +23,8 @@ Traduction française non-officielle pour **BLACK SOULS** (RPG Maker VX Ace).
 
 ### Linux / Steam Deck
 
-1. Téléchargez `install.sh` et `Game.rgss3a` depuis les [Releases](../../releases)
-2. Placez les deux fichiers dans le même dossier
+1. Téléchargez `BlackSouls_PatchFR_vX.X.X_Linux.zip` depuis les [Releases](../../releases)
+2. Extrayez le contenu du ZIP
 3. Exécutez :
    ```bash
    chmod +x install.sh
@@ -35,15 +35,16 @@ Le script détecte automatiquement Steam (natif et Flatpak) et propose une inter
 
 ### Installation manuelle
 
-1. Localisez votre dossier d'installation de BLACK SOULS :
+1. Téléchargez `BlackSouls_PatchFR_vX.X.X_Manual.zip` depuis les [Releases](../../releases)
+2. Localisez votre dossier d'installation de BLACK SOULS :
    - **Steam (Linux)** : `~/.local/share/Steam/steamapps/common/BLACK SOULS/`
    - **Steam (Windows)** : `C:\Program Files (x86)\Steam\steamapps\common\BLACK SOULS\`
 
    > *Clic droit sur le jeu dans Steam → Propriétés → Fichiers installés → Parcourir*
 
-2. Renommez l'original `Game.rgss3a` en `Game.rgss3a.backup`
-3. Copiez le nouveau `Game.rgss3a` du patch dans le dossier
-4. Lancez le jeu
+3. Renommez l'original `Game.rgss3a` en `Game.rgss3a.backup`
+4. Extrayez le contenu du ZIP dans le dossier du jeu
+5. Lancez le jeu
 
 ### Désinstallation
 
@@ -58,6 +59,16 @@ Cela restaurera le `Game.rgss3a` original.
 ### Le jeu ne charge pas la traduction
 
 Vérifiez que `Game.rgss3a` du patch a bien remplacé celui du jeu.
+
+### Erreur "Unable to find file: Audio/..." ou fichier manquant
+
+Le jeu charge en priorité les fichiers depuis `Game.rgss3a`, mais certains fichiers (notamment Audio/) sont stockés directement sur le disque.
+
+**Solutions :**
+1. **Copiez les fichiers manquants** depuis le dossier `Audio/` du ZIP Linux vers le dossier `Audio/` du jeu
+2. **Si le problème persiste**, renommez temporairement `Game.rgss3a` en `Game.rgss3a.test` pour forcer le jeu à utiliser les fichiers du disque, puis identifiez le fichier manquant
+
+> Les installateurs automatiques (Windows `.exe` et Linux `install.sh`) copient automatiquement les fichiers audio nécessaires.
 
 ### Mode fenêtré avec mise à l'échelle (Linux)
 
