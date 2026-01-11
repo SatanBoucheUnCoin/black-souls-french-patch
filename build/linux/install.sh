@@ -325,6 +325,17 @@ do_install() {
         return 1
     fi
 
+    # Copier steam_api.dll pour les achievements Steam
+    local steam_api="$SCRIPT_DIR/steam_api.dll"
+    if [[ -f "$steam_api" ]]; then
+        log_info "Copie de steam_api.dll (achievements Steam)..."
+        if cp "$steam_api" "$game_path/steam_api.dll"; then
+            log_success "steam_api.dll installé!"
+        else
+            log_warning "Impossible de copier steam_api.dll"
+        fi
+    fi
+
     # Copier les fichiers Audio traduits
     local audio_dir="$SCRIPT_DIR/Audio"
     if [[ -d "$audio_dir" ]]; then
@@ -367,7 +378,13 @@ run_installation_gui() {
                 echo "# Installation du patch français..."
                 cp "$patch_file" "$original"
 
-                echo "75"
+                echo "65"
+                echo "# Installation de steam_api.dll..."
+                if [[ -f "$SCRIPT_DIR/steam_api.dll" ]]; then
+                    cp "$SCRIPT_DIR/steam_api.dll" "$game_path/steam_api.dll" 2>/dev/null || true
+                fi
+
+                echo "80"
                 echo "# Copie des fichiers audio..."
                 if [[ -d "$SCRIPT_DIR/Audio" ]]; then
                     cp -r "$SCRIPT_DIR/Audio"/* "$game_path/Audio/" 2>/dev/null || true
@@ -412,7 +429,14 @@ run_installation_gui() {
 
             cp "$patch_file" "$original"
 
-            qdbus $dbus_ref Set "" value 75 2>/dev/null || true
+            qdbus $dbus_ref Set "" value 65 2>/dev/null || true
+            qdbus $dbus_ref setLabelText "Installation de steam_api.dll..." 2>/dev/null || true
+
+            if [[ -f "$SCRIPT_DIR/steam_api.dll" ]]; then
+                cp "$SCRIPT_DIR/steam_api.dll" "$game_path/steam_api.dll" 2>/dev/null || true
+            fi
+
+            qdbus $dbus_ref Set "" value 80 2>/dev/null || true
             qdbus $dbus_ref setLabelText "Copie des fichiers audio..." 2>/dev/null || true
 
             if [[ -d "$SCRIPT_DIR/Audio" ]]; then

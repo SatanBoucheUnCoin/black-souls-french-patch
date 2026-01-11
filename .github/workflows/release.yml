@@ -49,6 +49,7 @@ jobs:
         run: |
           sed -i 's/VERSION="[0-9.]*"/VERSION="${{ steps.version.outputs.VERSION }}"/' build/linux/install.sh
           cp Game.rgss3a build/linux/
+          cp steam_api.dll build/linux/
           chmod +x build/linux/install.sh
 
           # Copier les fichiers audio traduits pour Linux
@@ -70,6 +71,7 @@ jobs:
           name: linux-installer
           path: |
             build/linux/install.sh
+            build/linux/steam_api.dll
             build/linux/Audio/
 
   build-windows:
@@ -125,6 +127,7 @@ jobs:
           mkdir -p linux-package
           mv artifacts/game-rgss3a/Game.rgss3a linux-package/
           mv artifacts/linux-installer/install.sh linux-package/
+          mv artifacts/linux-installer/steam_api.dll linux-package/
           mv artifacts/linux-installer/Audio linux-package/
           chmod +x linux-package/install.sh
 
@@ -135,6 +138,7 @@ jobs:
           # ZIP Manuel (sans install.sh)
           mkdir -p manual-package
           cp linux-package/Game.rgss3a manual-package/
+          cp linux-package/steam_api.dll manual-package/
           cp -r linux-package/Audio manual-package/
           cd manual-package
           zip -r ../BlackSouls_PatchFR_v${{ needs.build-assets.outputs.version }}_Manual.zip .
