@@ -59,6 +59,8 @@ Source: "..\..\Audio\SE\Tonnerre*.ogg"; DestDir: "{app}\Audio\SE"; Flags: ignore
 Source: "..\..\Audio\SE\Soin*.ogg"; DestDir: "{app}\Audio\SE"; Flags: ignoreversion
 Source: "..\..\Audio\SE\Attaque*.ogg"; DestDir: "{app}\Audio\SE"; Flags: ignoreversion
 Source: "..\..\Audio\SE\Ténèbres*.ogg"; DestDir: "{app}\Audio\SE"; Flags: ignoreversion
+; Polices
+Source: "..\..\Fonts\*.ttf"; DestDir: "{app}\Fonts"; Flags: ignoreversion
 
 [Code]
 var
@@ -474,6 +476,7 @@ begin
             Space + '   -> Game.rgss3a.disabled' + NewLine +
             Space + '2. Installation du patch francais' + NewLine +
             Space + '3. Installation de steam_api.dll (achievements Steam)' + NewLine +
-            Space + '4. Copie des fichiers audio traduits' + NewLine + NewLine +
+            Space + '4. Copie des fichiers audio traduits' + NewLine +
+            Space + '5. Installation des polices (Fonts)' + NewLine + NewLine +
             'Pour desinstaller: verifiez l''integrite des fichiers dans Steam';
 end;

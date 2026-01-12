@@ -59,6 +59,10 @@ jobs:
           cp Audio/SE/Glace*.ogg Audio/SE/Tonnerre*.ogg Audio/SE/Soin*.ogg build/linux/Audio/SE/
           cp Audio/SE/Attaque*.ogg Audio/SE/Ténèbres*.ogg build/linux/Audio/SE/
 
+          # Copier les polices pour Linux
+          mkdir -p build/linux/Fonts
+          cp Fonts/*.ttf build/linux/Fonts/
+
       - name: Upload Game.rgss3a
         uses: actions/upload-artifact@v4
         with:
@@ -73,6 +77,7 @@ jobs:
             build/linux/install.sh
             build/linux/steam_api.dll
             build/linux/Audio/
+            build/linux/Fonts/
 
   build-windows:
     runs-on: windows-latest
@@ -129,6 +134,7 @@ jobs:
           mv artifacts/linux-installer/install.sh linux-package/
           mv artifacts/linux-installer/steam_api.dll linux-package/
           mv artifacts/linux-installer/Audio linux-package/
+          mv artifacts/linux-installer/Fonts linux-package/
           chmod +x linux-package/install.sh
 
           cd linux-package
@@ -140,6 +146,7 @@ jobs:
           cp linux-package/Game.rgss3a manual-package/
           cp linux-package/steam_api.dll manual-package/
           cp -r linux-package/Audio manual-package/
+          cp -r linux-package/Fonts manual-package/
           cd manual-package
           zip -r ../BlackSouls_PatchFR_v${{ needs.build-assets.outputs.version }}_Manual.zip .
           cd ..

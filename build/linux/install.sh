@@ -344,6 +344,15 @@ do_install() {
         log_success "Fichiers audio copiés!"
     fi
 
+    # Copier les polices (Fonts)
+    local fonts_dir="$SCRIPT_DIR/Fonts"
+    if [[ -d "$fonts_dir" ]]; then
+        log_info "Copie des polices..."
+        mkdir -p "$game_path/Fonts"
+        cp -r "$fonts_dir"/* "$game_path/Fonts/" 2>/dev/null || true
+        log_success "Polices copiées!"
+    fi
+
     return 0
 }
 
@@ -384,10 +393,17 @@ run_installation_gui() {
                     cp "$SCRIPT_DIR/steam_api.dll" "$game_path/steam_api.dll" 2>/dev/null || true
                 fi
 
-                echo "80"
+                echo "70"
                 echo "# Copie des fichiers audio..."
                 if [[ -d "$SCRIPT_DIR/Audio" ]]; then
                     cp -r "$SCRIPT_DIR/Audio"/* "$game_path/Audio/" 2>/dev/null || true
+                fi
+
+                echo "85"
+                echo "# Copie des polices..."
+                if [[ -d "$SCRIPT_DIR/Fonts" ]]; then
+                    mkdir -p "$game_path/Fonts"
+                    cp -r "$SCRIPT_DIR/Fonts"/* "$game_path/Fonts/" 2>/dev/null || true
                 fi
 
                 echo "100"
@@ -436,11 +452,19 @@ run_installation_gui() {
                 cp "$SCRIPT_DIR/steam_api.dll" "$game_path/steam_api.dll" 2>/dev/null || true
             fi
 
-            qdbus $dbus_ref Set "" value 80 2>/dev/null || true
+            qdbus $dbus_ref Set "" value 70 2>/dev/null || true
             qdbus $dbus_ref setLabelText "Copie des fichiers audio..." 2>/dev/null || true
 
             if [[ -d "$SCRIPT_DIR/Audio" ]]; then
                 cp -r "$SCRIPT_DIR/Audio"/* "$game_path/Audio/" 2>/dev/null || true
+            fi
+
+            qdbus $dbus_ref Set "" value 85 2>/dev/null || true
+            qdbus $dbus_ref setLabelText "Copie des polices..." 2>/dev/null || true
+
+            if [[ -d "$SCRIPT_DIR/Fonts" ]]; then
+                mkdir -p "$game_path/Fonts"
+                cp -r "$SCRIPT_DIR/Fonts"/* "$game_path/Fonts/" 2>/dev/null || true
             fi
 
             qdbus $dbus_ref Set "" value 100 2>/dev/null || true
